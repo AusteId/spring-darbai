@@ -8,6 +8,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class MovieController {
@@ -29,6 +30,19 @@ public class MovieController {
     return ResponseEntity.ok(movies.get(index));
   }
 
+  @GetMapping("/movies/search")
+  public ResponseEntity<Movie> searchMovieByTitle(@RequestParam String title) {
+
+    Optional<Movie> foundMovie = movies.stream().filter(a -> a.getTitle().toLowerCase()
+            .contains(title.toLowerCase())).findFirst();
+
+    if (foundMovie.isEmpty()) {
+      return ResponseEntity.notFound().build();
+    }
+
+    return ResponseEntity.ok(foundMovie.get());
+  }
+
   @PostMapping("/movies")
   public ResponseEntity<Movie> saveMovie(@RequestBody Movie movie) {
     if (movie.getTitle().isEmpty() || movie.getDirector().isEmpty() || movie.getId().isEmpty()) {
@@ -41,4 +55,5 @@ public class MovieController {
                     .path("/{index}").buildAndExpand(movies.size() - 1).toUri())
             .body(movie);
   }
+
 }
