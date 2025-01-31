@@ -2,6 +2,9 @@ package lt.techin.demo.controller;
 
 import lt.techin.demo.model.Movie;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -55,7 +58,8 @@ public class MovieController {
 
   @PostMapping("/movies")
   public ResponseEntity<Movie> saveMovie(@RequestBody Movie movie) {
-    if (movie.getTitle().isEmpty() || movie.getDirector().isEmpty() || movie.getId().isEmpty()) {
+    if (movie.getTitle() == null || movie.getDirector() == null
+            || movie.getTitle().isEmpty() || movie.getDirector().isEmpty()) {
       return ResponseEntity.badRequest().build();
     }
 
@@ -66,4 +70,40 @@ public class MovieController {
             .body(movie);
   }
 
+  @PutMapping("/movies/{index}")
+  public ResponseEntity<?> updateMovie(@PathVariable int index, @RequestBody Movie movie) {
+
+    if (movie.getTitle() == null || movie.getDirector() == null
+            || movie.getTitle().isEmpty() || movie.getDirector().isEmpty()) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Title or author cannot be empty");
+    }
+
+    if (index <= movies.size() - 1) {
+      Movie movieFromList = movies.get(index);
+
+      movieFromList.setTitle(movie.getTitle());
+      movieFromList.setDirector(movie.getDirector());
+      movies.add(movieFromList);
+      return ResponseEntity.ok(movieFromList);
+    }
+
+    return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
+                    .path("/{index}")
+                    .buildAndExpand(movies.size() - 1)
+                    .toUri())
+            .body(movie);
+
+  }
+
+  @DeleteMapping("/movies/{index}")
+  public ResponseEntity<Void> deleteMovie(@PathVariable int index) {
+
+    if (index > movies.size() - 1) {
+      return ResponseEntity.notFound().build();
+    }
+
+    movies.remove(index);
+    return ResponseEntity.noContent().build();
+    
+  }
 }
