@@ -30,17 +30,27 @@ public class MovieController {
     return ResponseEntity.ok(movies.get(index));
   }
 
+//  @GetMapping("/movies/search")
+//  public ResponseEntity<Movie> searchMovieByTitle(@RequestParam String title) {
+//
+//    Optional<Movie> foundMovie = movies.stream().filter(a -> a.getTitle().toLowerCase()
+//            .contains(title.toLowerCase())).findFirst();
+//
+//    if (foundMovie.isEmpty()) {
+//      return ResponseEntity.notFound().build();
+//    }
+//
+//    return ResponseEntity.ok(foundMovie.get());
+//  }
+
   @GetMapping("/movies/search")
-  public ResponseEntity<Movie> searchMovieByTitle(@RequestParam String title) {
+  public ResponseEntity<List<Movie>> searchMoviesByTitle(@RequestParam String title) {
 
-    Optional<Movie> foundMovie = movies.stream().filter(a -> a.getTitle().toLowerCase()
-            .contains(title.toLowerCase())).findFirst();
+    List foundedMovies = movies.stream()
+            .filter(a -> a.getTitle().toLowerCase().contains(title.toLowerCase()))
+            .toList();
 
-    if (foundMovie.isEmpty()) {
-      return ResponseEntity.notFound().build();
-    }
-
-    return ResponseEntity.ok(foundMovie.get());
+    return ResponseEntity.ok(foundedMovies);
   }
 
   @PostMapping("/movies")
