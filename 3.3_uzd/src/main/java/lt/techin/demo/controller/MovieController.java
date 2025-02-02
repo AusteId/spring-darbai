@@ -84,6 +84,11 @@ public class MovieController {
       return ResponseEntity.badRequest().body("Movie director field can't be empty");
     }
 
+    if (movieService.existsMovieByTitle(movie.getTitle())
+            && movieService.existsMovieByDirector(movie.getDirector())) {
+      return ResponseEntity.badRequest().body("A movie with such title and director already exist");
+    }
+
     if (movieService.existMovieById(id)) {
       Movie movieToUpdate = movieService.findMovieById(id).get();
       movieToUpdate.setTitle(movie.getTitle());

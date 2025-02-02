@@ -1,0 +1,58 @@
+{
+  "books": [
+    {
+      "id": "1",
+      "title": "To Kill a Mockingbird",
+      "author": "Harper Lee",
+      "category": "Fiction",
+      "price": "10.98",
+      "cover": "https://media.istockphoto.com/id/174673336/photo/at-the-library.webp?s=2048x2048&w=is&k=20&c=NYIADIqhz90o255emtIl42g-k5WHPXaNbg7YRLjo5QQ=",
+      "reserved": false
+    },
+    {
+      "id": "2",
+      "title": "A Brief History of Time",
+      "author": "Stephen Hawking",
+      "category": "Science",
+      "price": 15.49,
+      "cover": "https://rukminim1.flixcart.com/image/300/300/xif0q/diary-notebook/i/t/v/rg1132-escaper-original-imahfqzzt5ndbevw.jpeg",
+      "reserved": false
+    },
+    {
+      "id": "3",
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "category": "Fiction",
+      "price": 12.99,
+      "cover": "https://media.istockphoto.com/id/953026504/photo/studio-portrait-of-young-woman-in-front-of-big-book-on-the-table-dont-feel-like-studying.jpg?s=2048x2048&w=is&k=20&c=-Oia6PW77rJUlU7oydA3TIgcKXQY4D_Z6kCu_2ce8_I=",
+      "reserved": false
+    },
+    {
+      "id": "4",
+      "title": "Educated",
+      "author": "Tara Westover",
+      "category": "Biography",
+      "price": 14.99,
+      "cover": "https://media.istockphoto.com/id/174673336/photo/at-the-library.webp?s=2048x2048&w=is&k=20&c=NYIADIqhz90o255emtIl42g-k5WHPXaNbg7YRLjo5QQ=",
+      "reserved": true
+    },
+    {
+      "id": "5",
+      "title": "Dune",
+      "author": "Frank Herbert",
+      "category": "Science Fiction",
+      "price": 18.99,
+      "cover": "https://rukminim1.flixcart.com/image/300/300/xif0q/diary-notebook/i/t/v/rg1132-escaper-original-imahfqzzt5ndbevw.jpeg",
+      "reserved": false
+    },
+    {
+      "id": "6",
+      "title": "1984",
+      "author": "George Orwell",
+      "category": "Dystopian",
+      "price": "9.98",
+      "cover": "https://media.istockphoto.com/id/953026504/photo/studio-portrait-of-young-woman-in-front-of-big-book-on-the-table-dont-feel-like-studying.jpg?s=2048x2048&w=is&k=20&c=-Oia6PW77rJUlU7oydA3TIgcKXQY4D_Z6kCu_2ce8_I=",
+      "reserved": false
+    }
+  ]
+}
