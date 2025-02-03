@@ -104,6 +104,6 @@ public class MovieController {
 
     movies.remove(index);
     return ResponseEntity.noContent().build();
-    
+
   }
 }
