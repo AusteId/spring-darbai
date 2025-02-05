@@ -71,25 +71,23 @@ public class MovieController {
   }
 
   @PutMapping("/movies/{id}")
-  public ResponseEntity<?> updateMovie(@PathVariable long id, @Valid @RequestBody Movie movie) {
-
-//    if (movie.getTitle() == null || movie.getTitle().isEmpty()) {
-//      return ResponseEntity.badRequest().body("Movie title field can't be empty");
-//    }
-//
-//    if (movie.getDirector() == null || movie.getDirector().isEmpty()) {
-//      return ResponseEntity.badRequest().body("Movie director field can't be empty");
-//    }
+  public ResponseEntity<?> updateMovie(@PathVariable long id, @Valid @RequestBody MovieDTO movieDTO) {
 
     if (movieService.existMovieById(id)) {
+//      Movie movieToUpdate = movieService.findMovieById(id).get();
+//      movieToUpdate.setTitle(movie.getTitle());
+//      movieToUpdate.setDirector(movie.getDirector());
+//      movieToUpdate.setScreenings(movie.getScreenings());
+//      return ResponseEntity.ok(movieService.saveMovie(movieToUpdate));
+
       Movie movieToUpdate = movieService.findMovieById(id).get();
-      movieToUpdate.setTitle(movie.getTitle());
-      movieToUpdate.setDirector(movie.getDirector());
-      movieToUpdate.setScreenings(movie.getScreenings());
-      return ResponseEntity.ok(movieService.saveMovie(movieToUpdate));
+      MovieMapper.updateMovieFromDTO(movieToUpdate, movieDTO);
+      Movie updatedMovie = movieService.saveMovie(movieToUpdate);
+
+      return ResponseEntity.ok(updatedMovie);
     }
 
-    Movie savedMovie = movieService.saveMovie(movie);
+    Movie savedMovie = movieService.saveMovie(MovieMapper.toMovie(movieDTO));
 
     return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
                     .replacePath("/api/movies/{id}")

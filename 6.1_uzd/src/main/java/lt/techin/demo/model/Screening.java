@@ -16,13 +16,7 @@ public class Screening {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
-  @NotNull
-  @Size(max = 100, message = "Theater input should be maximum 100 character long")
-  @Pattern(regexp = "^[A-Z][A-Za-z0-9\\s\\-]*$", message = "Theater input should start from uppercase letter")
   private String theater;
-
-  @NotNull
-  @FutureOrPresent(message = "The date must be in the present or future")
   private LocalDateTime dateAndTime;
 
   public Screening() {

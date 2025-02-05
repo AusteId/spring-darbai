@@ -27,5 +27,11 @@ public class MovieMapper {
     return movie;
   }
 
+  public static void updateMovieFromDTO(Movie movie, MovieDTO movieDTO) {
+    movie.setTitle(movieDTO.title());
+    movie.setDirector(movieDTO.director());
+    movie.setScreenings(movieDTO.screenings());
+  }
+
 
 }
