@@ -19,7 +19,7 @@ public class Movie {
   private String title;
 
   @NotNull
-  @Size(min = 2, max = 100, message = "Movie director input should be 2-100 character long")
+  @Size(max = 100, message = "Movie director input should be maximum 100 character long")
   @Pattern(regexp = "[A-Z][A-Za-z\\s\\-]*$", message = "Director input should start " +
           "from uppercase letter and can't contain numbers")
   private String director;

@@ -13,15 +13,7 @@ public class Movie {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
-  @NotNull
-  @Size(min = 2, max = 100, message = "Movie title input should be 2-100 character long")
-  @Pattern(regexp = "^[A-Z][A-Za-z0-9\\s\\-]*$", message = "Title input should start from uppercase letter")
   private String title;
-
-  @NotNull
-  @Size(min = 2, max = 100, message = "Movie director input should be 2-100 character long")
-  @Pattern(regexp = "[A-Z][A-Za-z\\s\\-]*$", message = "Director input should start " +
-          "from uppercase letter and can't contain numbers")
   private String director;
 
   @OneToMany(cascade = CascadeType.ALL)
