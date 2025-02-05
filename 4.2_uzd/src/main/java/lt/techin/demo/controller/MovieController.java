@@ -93,7 +93,7 @@ public class MovieController {
                     .replacePath("/api/movies/{id}")
                     .buildAndExpand(savedMovie.getId())
                     .toUri())
-            .body(movieDTO);
+            .body(savedMovie);
   }
 
   @DeleteMapping("/movies/{id}")
