@@ -46,7 +46,7 @@ public class MovieController {
   }
 
   @PostMapping("/movies")
-  public ResponseEntity<?> saveMovie(@Valid @RequestBody Movie movie) {
+  public ResponseEntity<?> saveMovie(@Valid @RequestBody MovieDTO movieDTO) {
 
 //    if (movie.getTitle() == null || movie.getTitle().isEmpty()) {
 //      return ResponseEntity.badRequest().body("Movie title field can't be empty");
@@ -56,18 +56,18 @@ public class MovieController {
 //      return ResponseEntity.badRequest().body("Movie director field can't be empty");
 //    }
 
-    if (movieService.existsMovieByTitle(movie.getTitle())
-            && movieService.existsMovieByDirector(movie.getDirector())) {
+    if (movieService.existsMovieByTitle(movieDTO.title())
+            && movieService.existsMovieByDirector(movieDTO.director())) {
       return ResponseEntity.badRequest().body("A movie with such title and director already exist");
     }
 
-    Movie savedMovie = movieService.saveMovie(movie);
+    Movie savedMovie = movieService.saveMovie(MovieMapper.toMovie(movieDTO));
 
     return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
                     .path("/{id}")
                     .buildAndExpand(savedMovie.getId())
                     .toUri())
-            .body(savedMovie);
+            .body(MovieMapper.toMovieDTO(savedMovie));
   }
 
   @PutMapping("/movies/{id}")

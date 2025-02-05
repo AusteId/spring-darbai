@@ -18,5 +18,14 @@ public class MovieMapper {
     return new MovieDTO(movie.getId(), movie.getTitle(), movie.getDirector(), movie.getScreenings());
   }
 
+  public static Movie toMovie(MovieDTO movieDTO) {
+    Movie movie = new Movie();
+    movie.setTitle(movieDTO.title());
+    movie.setDirector(movieDTO.director());
+    movie.setScreenings(movieDTO.screenings());
+
+    return movie;
+  }
+
 
 }
