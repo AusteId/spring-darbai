@@ -1,6 +1,8 @@
 package lt.techin.demo.service;
 
+import lt.techin.demo.model.Actor;
 import lt.techin.demo.model.Movie;
+import lt.techin.demo.repository.ActorRepository;
 import lt.techin.demo.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +23,6 @@ public class MovieService {
   public List<Movie> findAllMovies() {
     return movieRepository.findAll();
   }
-
 
   public boolean existMovieById(long id) {
     return movieRepository.existsById(id);

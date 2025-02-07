@@ -20,13 +20,22 @@ public class Movie {
   @JoinColumn(name = "movie_id")
   private List<Screening> screenings;
 
+  @ManyToMany
+  @JoinTable(
+          name = "movies_actors",
+          joinColumns = @JoinColumn(name = "movie_id"),
+          inverseJoinColumns = @JoinColumn(name = "actor_id")
+  )
+  private List<Actor> actors;
+
   public Movie() {
   }
 
-  public Movie(String title, String director, List<Screening> screenings) {
+  public Movie(String title, String director, List<Screening> screenings, List<Actor> actors) {
     this.title = title;
     this.director = director;
     this.screenings = screenings;
+    this.actors = actors;
   }
 
   public long getId() {
@@ -55,5 +64,13 @@ public class Movie {
 
   public void setScreenings(List<Screening> screenings) {
     this.screenings = screenings;
+  }
+
+  public List<Actor> getActors() {
+    return actors;
+  }
+
+  public void setActors(List<Actor> actors) {
+    this.actors = actors;
   }
 }

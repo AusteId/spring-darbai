@@ -78,6 +78,7 @@ public class MovieController {
 //      movieToUpdate.setTitle(movie.getTitle());
 //      movieToUpdate.setDirector(movie.getDirector());
 //      movieToUpdate.setScreenings(movie.getScreenings());
+//      movieToUpdate.setActors(movie.getActors());
 //      return ResponseEntity.ok(movieService.saveMovie(movieToUpdate));
 
       Movie movieToUpdate = movieService.findMovieById(id).get();
