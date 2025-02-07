@@ -1,8 +1,14 @@
 package lt.techin.demo.service;
 
+import lt.techin.demo.model.Actor;
 import lt.techin.demo.model.Movie;
+import lt.techin.demo.repository.ActorRepository;
 import lt.techin.demo.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +27,6 @@ public class MovieService {
   public List<Movie> findAllMovies() {
     return movieRepository.findAll();
   }
-
 
   public boolean existMovieById(long id) {
     return movieRepository.existsById(id);
@@ -45,6 +50,17 @@ public class MovieService {
 
   public boolean existsMovieByDirector(String director) {
     return movieRepository.existsByDirector(director);
+  }
+
+  public Page<Movie> findAllMoviesPage(int page, int size, String sort) {
+
+    if (sort == null) {
+      Pageable pageable = PageRequest.of(page, size);
+      return movieRepository.findAll(pageable);
+    }
+
+    Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
+    return movieRepository.findAll(pageable);
   }
 
 }
