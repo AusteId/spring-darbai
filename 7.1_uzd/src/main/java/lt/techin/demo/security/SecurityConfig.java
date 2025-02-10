@@ -23,6 +23,10 @@ public class SecurityConfig {
             .formLogin(Customizer.withDefaults())
             .authorizeHttpRequests(authorize -> authorize
                     .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/users/{id}").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/api/users/{id}").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasRole("ADMIN")
                     .anyRequest().authenticated());
 
     return http.build();
