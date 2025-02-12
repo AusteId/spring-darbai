@@ -1,5 +1,6 @@
 package lt.techin.demo.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import lt.techin.demo.model.Actor;
 import lt.techin.demo.model.Movie;
@@ -9,10 +10,13 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
+import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -159,6 +163,50 @@ public class MovieControllerTest {
             .andExpect(jsonPath("$").doesNotExist());
 
     Mockito.verify(movieService, times(0)).findMovieById(1L);
+  }
+
+  @Test
+  @WithMockUser(username = "admin", authorities = {"SCOPE_ROLE_ADMIN"})
+  void addMovie_whenAdminAddMovie_thenReturnCreatedMovieAnd201() throws Exception {
+
+    BDDMockito.given(movieService.saveMovie(ArgumentMatchers.any(Movie.class))).willReturn(movieFirst);
+    ObjectMapper objectMapper = new ObjectMapper();
+
+    mockMvc.perform(MockMvcRequestBuilders.post("/api/movies")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(movieFirst)))
+            .andExpect(status().isCreated())
+            .andExpect(jsonPath("id").exists())
+            .andExpect(jsonPath("title").value("First title"))
+            .andExpect(jsonPath("director").value("First director"))
+            .andExpect(jsonPath("screenings").isArray())
+            .andExpect(jsonPath("screenings", Matchers.hasSize(0)))
+            .andExpect(jsonPath("actors").isArray())
+            .andExpect(jsonPath("actors", Matchers.hasSize(1)))
+            .andExpect(jsonPath("actors.[0].id").exists())
+            .andExpect(jsonPath("actors.[0].firstName").value("Actor firstname"))
+            .andExpect(jsonPath("actors.[0].lastName").value("Actor lastname"))
+            .andExpect(jsonPath("actors.[0].birthdate").value("2000-01-01"));
+
+    Mockito.verify(movieService, times(1)).saveMovie(ArgumentMatchers.any(Movie.class));
+  }
+
+  @Test
+  @WithMockUser(username = "admin", authorities = {"SCOPE_ROLE_ADMIN"})
+  void addMovie_whenAdminAddMovieWithFailingValidationCriteria_thenRespond400() throws Exception {
+
+    Movie movie = new Movie("", "First director", List.of(), List.of());
+    BDDMockito.given(movieService.saveMovie(ArgumentMatchers.any(Movie.class))).willReturn(movie);
+    ObjectMapper objectMapper = new ObjectMapper();
+
+    mockMvc.perform(MockMvcRequestBuilders.post("/api/movies")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(movie)))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("title").value("Title input should start from uppercase letter"));
+
+    Mockito.verify(movieService, times(0)).saveMovie(any(Movie.class));
+
   }
 
 
