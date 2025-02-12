@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import javax.swing.text.AbstractDocument;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 
 import static org.mockito.BDDMockito.*;
@@ -110,6 +111,54 @@ public class MovieControllerTest {
             .andExpect(jsonPath("$").doesNotExist());
 
     Mockito.verify(movieService, times(0)).findAllMovies();
+  }
+
+  @Test
+  @WithMockUser(username = "user", authorities = {"SCOPE_ROLE_USER"})
+  void getMovie_whenFindMovieByID_thenReturnMovieByIDAnd200() throws Exception {
+
+    given(movieService.findMovieById(1L)).willReturn(Optional.of(movieFirst));
+
+    mockMvc.perform(MockMvcRequestBuilders.get("/api/movies/1"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("id").exists())
+            .andExpect(jsonPath("title").value("First title"))
+            .andExpect(jsonPath("director").value("First director"))
+            .andExpect(jsonPath("screenings").isArray())
+            .andExpect(jsonPath("screenings", Matchers.hasSize(0)))
+            .andExpect(jsonPath("actors").isArray())
+            .andExpect(jsonPath("actors", Matchers.hasSize(1)))
+            .andExpect(jsonPath("actors.[0].id").exists())
+            .andExpect(jsonPath("actors.[0].firstName").value("Actor firstname"))
+            .andExpect(jsonPath("actors.[0].lastName").value("Actor lastname"))
+            .andExpect(jsonPath("actors.[0].birthdate").value("2000-01-01"));
+
+    Mockito.verify(movieService, times(1)).findMovieById(1L);
+  }
+
+  @Test
+  @WithMockUser(username = "user", authorities = {"SCOPE_ROLE_USER"})
+  void getMovie_whenFindMovieByIDWithNonExistingID_thenRespond404() throws Exception {
+
+    given(movieService.findMovieById(10L)).willReturn(Optional.empty());
+
+    mockMvc.perform(MockMvcRequestBuilders.get("/api/movies/10"))
+            .andExpect(status().isNotFound())
+            .andExpect(content().string(""))
+            .andExpect(jsonPath("$").doesNotExist());
+
+    Mockito.verify(movieService, times(1)).findMovieById(10L);
+  }
+
+  @Test
+  void getMovie_whenFindMovieByIDUnauthenticated_thenRespond401() throws Exception {
+
+    mockMvc.perform(MockMvcRequestBuilders.get("/api/movies/1"))
+            .andExpect(status().isUnauthorized())
+            .andExpect(content().string(""))
+            .andExpect(jsonPath("$").doesNotExist());
+
+    Mockito.verify(movieService, times(0)).findMovieById(1L);
   }
 
 
