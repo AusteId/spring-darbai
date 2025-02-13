@@ -206,7 +206,6 @@ public class MovieControllerTest {
             .andExpect(jsonPath("title").value("Title input should start from uppercase letter"));
 
     Mockito.verify(movieService, times(0)).saveMovie(any(Movie.class));
-
   }
 
 
