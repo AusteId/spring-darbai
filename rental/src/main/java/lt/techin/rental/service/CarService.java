@@ -27,6 +27,10 @@ public class CarService {
   }
 
   public Car saveCar(Car car) {
+
+    if (car.getStatus() == null) {
+      car.setStatus("AVAILABLE");
+    }
     return carRepository.save(car);
   }
 
