@@ -1,5 +1,6 @@
 package lt.techin.rental.model;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import jakarta.persistence.*;
 
 import java.util.List;
