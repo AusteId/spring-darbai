@@ -25,7 +25,7 @@ public class CarController {
     this.carService = carService;
   }
 
-  @GetMapping("cars")
+  @GetMapping("/cars")
   public ResponseEntity<List<CarResponseDTO>> getCars() {
     List<Car> cars = carService.findAllCars();
     List<CarResponseDTO> carsDTO = cars.stream()
@@ -35,7 +35,7 @@ public class CarController {
     return ResponseEntity.ok(carsDTO);
   }
 
-  @GetMapping("cars/{id}")
+  @GetMapping("/cars/{id}")
   public ResponseEntity<CarResponseDTO> getCar(@PathVariable long id) {
     Optional<Car> foundedCar = carService.findCarByID(id);
 
