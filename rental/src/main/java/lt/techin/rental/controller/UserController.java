@@ -54,6 +54,18 @@ public class UserController {
             .body(savedUserDTO);
   }
 
+  @PutMapping("/{userId}/roles/{roleName}")
+  public ResponseEntity<User> addRoleToUser(@PathVariable long userId, @PathVariable String roleName) {
+
+    if (roleName == null || roleName.isEmpty()) {
+      return ResponseEntity.badRequest().build();
+    }
+
+    User updatedUser = userService.addRoleToUser(userId, roleName);
+    
+    return ResponseEntity.ok(updatedUser);
+  }
+
 
 }
 
