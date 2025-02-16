@@ -15,8 +15,9 @@ public class UserService {
   private final UserRepository userRepository;
   private RoleRepository roleRepository;
 
-  public UserService(UserRepository userRepository) {
+  public UserService(UserRepository userRepository, RoleRepository roleRepository) {
     this.userRepository = userRepository;
+    this.roleRepository = roleRepository;
   }
 
   public User saveUser(User user) {
