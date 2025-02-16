@@ -67,9 +67,9 @@ public class RentalController {
   }
 
   @PostMapping("/rentals")
-  public ResponseEntity<RentalResponseDTO> addRental(@Valid @RequestBody RentalRequestDTO rentalRequestDTO, @AuthenticationPrincipal User user, @RequestParam long carId) {
+  public ResponseEntity<RentalResponseDTO> addRental(@Valid @RequestBody RentalRequestDTO rentalRequestDTO, @AuthenticationPrincipal User user) {
 
-    Optional<Car> carOptional = carService.findCarByID(carId);
+    Optional<Car> carOptional = carService.findCarByID(rentalRequestDTO.carId());
     if (carOptional.isEmpty()) {
       return ResponseEntity.notFound().build();
     }
