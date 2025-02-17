@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "registrations")
 public class Registration {
 
   @Id

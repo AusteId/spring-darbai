@@ -11,3 +11,4 @@ public record RegistrationResponseDTO(
         LocalDateTime registrationDate
 ) {
 }
+

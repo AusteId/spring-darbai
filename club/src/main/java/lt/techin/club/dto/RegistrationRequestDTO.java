@@ -8,3 +8,6 @@ public record RegistrationRequestDTO(
         User user
 ) {
 }
+
+
+
