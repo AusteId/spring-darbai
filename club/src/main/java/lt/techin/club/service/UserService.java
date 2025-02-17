@@ -23,23 +23,7 @@ public class UserService {
 
   public User saveUser(User user) {
 
-    Role userRole = roleRepository.findByName("ROLE_USER")
-            .orElseGet(() -> roleRepository.save(new Role("ROLE_USER")));
-
-    List<Role> userRoles = new ArrayList<>(user.getRoles());
-
-    if (userRoles.isEmpty()) {
-      userRoles.add(userRole);
-    }
-
-    boolean hasAdminRole = userRoles.stream()
-            .anyMatch(a -> a.getName().equals("ROLE_ADMIN"));
-
-    if (hasAdminRole && !userRoles.contains(userRole)) {
-      userRoles.add(userRole);
-    }
-
-    user.setRoles(userRoles);
+   
 
     return userRepository.save(user);
   }
