@@ -29,9 +29,10 @@ public class RunningEventController {
   private RegistrationService registrationService;
 
   @Autowired
-  public RunningEventController(RunningEventService runningEventService, UserService userService) {
+  public RunningEventController(RunningEventService runningEventService, UserService userService, RegistrationService registrationService) {
     this.runningEventService = runningEventService;
     this.userService = userService;
+    this.registrationService = registrationService;
   }
 
   @GetMapping("/events")
@@ -132,6 +133,6 @@ public class RunningEventController {
 
     runningEventService.deleteRunningEvent(id);
 
-    return ResponseEntity.ok().build();
+    return ResponseEntity.noContent().build();
   }
 }

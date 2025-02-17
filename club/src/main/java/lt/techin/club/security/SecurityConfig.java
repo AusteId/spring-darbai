@@ -46,9 +46,9 @@ public class SecurityConfig {
     http
             .authorizeHttpRequests(authorize -> authorize
                     .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/api/events").hasAnyAuthority("SCOPE_ROLE_ADMIN", "ADMIN")
-                    .requestMatchers(HttpMethod.DELETE, "/api/events/**").hasAnyAuthority("SCOPE_ROLE_ADMIN", "ADMIN")
-                    .requestMatchers(HttpMethod.GET, "/api/events/*/participants").hasAnyAuthority("SCOPE_ROLE_ADMIN", "ADMIN")
+                    .requestMatchers(HttpMethod.POST, "/api/events").hasAnyAuthority("SCOPE_ROLE_ADMIN", "ROLE_ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/api/events/**").hasAnyAuthority("SCOPE_ROLE_ADMIN", "ROLE_ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/events/*/participants").hasAnyAuthority("SCOPE_ROLE_ADMIN", "ROLE_ADMIN")
                     .anyRequest().authenticated()
             )
             .csrf(c -> c.disable())

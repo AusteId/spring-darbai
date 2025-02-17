@@ -15,7 +15,7 @@ public record UserRequestDTO(
         String username,
         @NotNull
         @Size(min = 6, max = 150, message = "Password input should be 6-150 characters long")
-        @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{10,255}$",
+        @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$",
                 message = "Password must contain at least one uppercase letter, " +
                         "one lowercase letter, and one digit")
         String password,
