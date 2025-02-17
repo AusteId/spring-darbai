@@ -52,6 +52,10 @@ public class RunningEventController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
+    if (!user.getRoles().stream().anyMatch(role -> role.getName().equals("ROLE_ADMIN"))) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
     RunningEvent runningEvent = new RunningEvent();
     runningEvent.setName(runningEventRequestDTO.name());
     runningEvent.setCalendarDate(runningEventRequestDTO.calendarDate());
@@ -88,4 +92,9 @@ public class RunningEventController {
 
     return ResponseEntity.ok().build();
   }
+
+  //  @GetMapping("/events/{eventId}/participants")
+//  public ResponseEntity<List<UserResponseDTO>> getRegisteredUsersByEventId(@PathVariable long eventId) {
+//    List<User> users = userService.findRegisteredUsersByEventId(eventId);
+//  }
 }

@@ -1,4 +1,10 @@
 package lt.techin.club.dto;
 
-public record RegistrationRequestDTO() {
+import jakarta.validation.constraints.NotNull;
+import lt.techin.club.model.User;
+
+public record RegistrationRequestDTO(
+        @NotNull
+        User user
+) {
 }
