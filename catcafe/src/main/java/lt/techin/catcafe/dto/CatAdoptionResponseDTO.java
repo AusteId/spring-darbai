@@ -1,4 +1,11 @@
 package lt.techin.catcafe.dto;
 
-public record CatAdoptionResponseDTO() {
+import java.sql.Timestamp;
+
+public record CatAdoptionResponseDTO(
+        Long id,
+        String catName,
+        String status,
+        Timestamp applicationDate
+) {
 }

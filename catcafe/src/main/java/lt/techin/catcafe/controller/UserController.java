@@ -38,6 +38,14 @@ public class UserController {
     return ResponseEntity.ok(usersDTO);
   }
 
+  @GetMapping("/users/{id}")
+  public ResponseEntity<UserResponseDTO> getUserById(@PathVariable long id) {
+    return userService.findUserById(id)
+            .map(a -> ResponseEntity.ok(UserMapper.toCreateUserResponseDTO(a)))
+            .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+  }
+
+
   @PostMapping("/auth/register")
   public ResponseEntity<UserResponseDTO> addUser(@Valid @RequestBody UserRequestDTO userRequestDTO) {
 
