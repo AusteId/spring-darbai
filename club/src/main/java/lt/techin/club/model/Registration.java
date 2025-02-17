@@ -1,6 +1,7 @@
 package lt.techin.club.model;
 
 import jakarta.persistence.*;
+import lt.techin.club.model.Registration;
 
 import java.time.LocalDateTime;
 

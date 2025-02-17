@@ -1,7 +1,7 @@
 package lt.techin.club.model;
 
 import jakarta.persistence.*;
-import jakarta.servlet.Registration;
+import lt.techin.club.model.Registration;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -67,7 +67,7 @@ public class User implements UserDetails {
     return registrations;
   }
 
-  public void setRentals(List<Registration> registrations) {
+  public void setRegistrations(List<Registration> registrations) {
     this.registrations = registrations;
   }
 
